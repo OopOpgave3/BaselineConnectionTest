@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using IntroduktionAspCore_MVC.Models;
 
-namespace MvcMovie.Data
+namespace IntroduktionAspCore_MVC.Data
 {
-    public class IntroduktionAspCore_MVC : DbContext
+    public class MvcMovieContext : DbContext
     {
-        public IntroduktionAspCore_MVC(DbContextOptions<IntroduktionAspCore_MVC> options) : base(options)
+        public MvcMovieContext(DbContextOptions<MvcMovieContext> options) : base(options)
         {
 
         }
