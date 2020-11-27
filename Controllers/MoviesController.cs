@@ -32,17 +32,20 @@ namespace IntroduktionAspCore_MVC.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(s => s.Title.Contains(searchString));
+                movies = movies.Where(s => s.MovieTitle.Contains(searchString));
             }
 
             if (!string.IsNullOrEmpty(movieGenre))
             {
-                movies = movies.Where(x => x.Genre == movieGenre);
+                for (int i = 0; i < 10; i++)
+                {
+                    movies = movies.Where(x => x.Genre.ToString().Contains(movieGenre));
+                }
             }
 
-            var movieGenreVM = new MovieGenreViewModel
+            var movieGenreVM = new MovieListViewModel
             {
-                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Categories = new SelectList(await genreQuery.Distinct().ToListAsync()),
                 Movies = await movies.ToListAsync()
             };
 
@@ -58,7 +61,7 @@ namespace IntroduktionAspCore_MVC.Controllers
             }
 
             var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
                 return NotFound();
@@ -112,7 +115,7 @@ namespace IntroduktionAspCore_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
-            if (id != movie.Id)
+            if (id != movie.MovieId)
             {
                 return NotFound();
             }
@@ -126,7 +129,7 @@ namespace IntroduktionAspCore_MVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.Id))
+                    if (!MovieExists(movie.MovieId))
                     {
                         return NotFound();
                     }
@@ -149,7 +152,7 @@ namespace IntroduktionAspCore_MVC.Controllers
             }
 
             var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
                 return NotFound();
@@ -171,7 +174,7 @@ namespace IntroduktionAspCore_MVC.Controllers
 
         private bool MovieExists(int id)
         {
-            return _context.Movie.Any(e => e.Id == id);
+            return _context.Movie.Any(e => e.MovieId == id);
         }
     }
 }

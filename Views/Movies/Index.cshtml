@@ -1,4 +1,4 @@
-﻿@model IntroduktionAspCore_MVC.Models.MovieGenreViewModel
+﻿@model IntroduktionAspCore_MVC.Models.MovieListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +12,7 @@
 
 <form asp-controller="Movies" asp-action="Index" method="get">
     <p>
-        <select asp-for="MovieGenre" asp-items="Model.Genres">
+        <select asp-for="Categories" asp-items="Model.Categories">
             <option value="">All</option>
         </select>
 
@@ -25,16 +25,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].Title)
+                @Html.DisplayNameFor(model => model.Movies[0].MovieTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movies[0].ReleaseDate)
+                @Html.DisplayNameFor(model => model.Movies[0].MovieReleaseDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Movies[0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies[0].Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Movies[0].Rating)
@@ -47,24 +44,24 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.MovieTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
+                @Html.DisplayFor(modelItem => item.MovieReleaseDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @foreach (var CatItem in item.Genre)
+                {
+                    @Html.DisplayFor(modelItem => CatItem)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MovieId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MovieId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MovieId">Delete</a>
             </td>
         </tr>
         }
